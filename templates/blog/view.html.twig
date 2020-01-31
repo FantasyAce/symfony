@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{article.title}}!{% endblock %}
+
+{% block body %}
+        <img alt="user uploaded image" src="{{asset('uploads/image/' ~ article.image)}}">
+        <h1>{{article.title}}</h1>
+          <h3>
+           Posté le:  {{article.createdAt | date("d/m/y H:i")}}
+           {% if article.editedAt %}
+           Modifié le
+                {{article.editedAt | date("d/m/y H:i")}}
+              {% endif %}  
+        </h3>
+        <h4>
+         Par:  {{ article.author }}
+         </h4>
+
+        <p>{{article.content}}</p>
+
+        {# 
+                app.user permet de recuperer l'utilisateur connecté
+                et ne renvoie rien si l'utilisateur n'est pas connecté
+         #}
+
+        {% if app.user %}
+        {% if app.user.id == article.author.id %}
+
+                 <a class="btn btn-primary float-left" href="{{ path('article_edit', {'id': article.id}) }} ">Modifié le Post</a>
+                  <a class="btn btn-danger float-right"  href="{{ path('article_delete', {'id': article.id}) }}">Delete</a>
+        
+        {% endif %}
+        {% endif %}
+        
+                <a class="btn btn-success text-center" href="{{ path('blog', {'id': article.id}) }}">Retour</a>
+
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil!{% endblock %}
+
+{% block body %}
+
+      
+        {# on parcourt le tableau d'articles avec un for #}
+        {% for article in articles %}
+        <h1>
+        <a href="{{ path('article_view', {'id': article.id}) }}">
+        {{article.title}}
+        </a>
+        </h1>
+        <h3>
+           Posté le:  {{article.createdAt | date("d/m/y h:i")}}
+        </h3>
+        <h4>
+         Par:  {{ article.author }}
+         </h4>
+       <fieldset>
+            {{article.content}}
+            {{article.image}}
+
+        </fieldset>
+
+
+       
+        
+        {% endfor %}
+{% endblock %}
